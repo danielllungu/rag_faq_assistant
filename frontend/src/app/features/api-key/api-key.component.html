@@ -1,0 +1,36 @@
+<section class="api-key-page">
+  <div class="card">
+    <header>
+      <h1>FAQ RAG Assistant</h1>
+      <p>Enter your API key to start chatting with the assistant.</p>
+    </header>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <label for="apiKey">API Key</label>
+      <input
+        id="apiKey"
+        type="password"
+        formControlName="apiKey"
+        placeholder="Enter your API key"
+        [attr.aria-invalid]="form.controls.apiKey.invalid && form.controls.apiKey.touched"
+        autocomplete="off"
+      />
+      <div class="hint" *ngIf="form.controls.apiKey.hasError('required') && form.controls.apiKey.touched">
+        API key is required.
+      </div>
+      <div class="hint" *ngIf="form.controls.apiKey.hasError('minlength') && form.controls.apiKey.touched">
+        API key looks too short.
+      </div>
+
+      <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+      <button type="submit" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Saving…' : 'Continue' }}
+      </button>
+    </form>
+
+    <button type="button" class="link" (click)="clearSavedKey()" *ngIf="apiService.apiKey">
+      Clear saved key
+    </button>
+  </div>
+</section>

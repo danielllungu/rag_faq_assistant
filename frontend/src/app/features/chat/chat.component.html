@@ -1,0 +1,63 @@
+<section class="chat-page">
+  <header class="top-bar">
+    <div>
+      <h1>FAQ Assistant</h1>
+    </div>
+    <div class="session">
+      <span class="label">API Key</span>
+      <span class="value" *ngIf="maskedApiKey; else missingKey">{{ maskedApiKey }}</span>
+      <ng-template #missingKey><span class="value muted">Not set</span></ng-template>
+      <button type="button" (click)="retry()">Change</button>
+    </div>
+  </header>
+
+  <article class="chat-window">
+    <div #messagesContainer class="messages" *ngIf="messages.length; else emptyState">
+      <div class="message" *ngFor="let message of messages; trackBy: trackByIndex" [ngClass]="message.role">
+        <div class="avatar" [attr.data-role]="message.role">
+          <span class="label" *ngIf="message.role === 'assistant'">AI</span>
+          <span class="label" *ngIf="message.role === 'user'">You</span>
+        </div>
+        <div class="bubble">
+          <div class="content">{{ message.content }}</div>
+          <div
+            class="meta"
+            *ngIf="message.role === 'assistant' && message.response?.source !== 'llm' && message.matchScore !== null"
+          >
+            Top similarity: {{ message.matchScore! * 100 | number: '1.0-1' }}%
+          </div>
+          <span class="timestamp">{{ message.timestamp | date: 'shortTime' }}</span>
+        </div>
+      </div>
+    </div>
+    <ng-template #emptyState>
+      <div class="empty-state">
+        <h2>Welcome 👋</h2>
+        <p>Ask anything about your FAQs. The assistant will find the best answer for you.</p>
+      </div>
+    </ng-template>
+
+    <div class="loading" *ngIf="isLoading">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+
+    <div class="error-banner" *ngIf="errorMessage">{{ errorMessage }}</div>
+  </article>
+
+  <form class="composer" [formGroup]="form" (ngSubmit)="submit()">
+    <textarea
+      #composerInput
+      formControlName="question"
+      placeholder="Type your question…"
+      rows="1"
+      (keydown)="handleKeydown($event)"
+      (input)="autoResize()"
+      [attr.aria-invalid]="form.controls.question.invalid && form.controls.question.touched"
+    ></textarea>
+    <button type="submit" [disabled]="isLoading || form.invalid">
+      {{ isLoading ? 'Thinking…' : 'Send' }}
+    </button>
+  </form>
+</section>
