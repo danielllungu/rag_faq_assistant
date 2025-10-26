@@ -49,7 +49,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.pushSystemMessage('Ask anything about your FAQs. The assistant will use the knowledge base and LLM when needed.');
+    this.pushSystemMessage('Ask a question and I will search our FAQs for you.');
   }
 
   ngAfterViewInit(): void {
