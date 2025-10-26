@@ -11,7 +11,7 @@ A full-stack FAQ management system with RAG & LLM.
 
 ## Prerequisites
 
-- Node.js 20+ and npm 10+
+- Node.js 20+ and npm 10+ (for local UI development)
 - Python 3.11+
 - Docker and Docker Compose
 
