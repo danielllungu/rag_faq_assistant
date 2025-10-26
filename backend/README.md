@@ -62,7 +62,7 @@ python db_init/initialize.py
 Seed the database with FAQ data and embeddings:
 
 ```bash
-python db_init/scripts/seed_database.py
+python -m db_init.scripts.seed_database
 ```
 
 ### Step 4: Run the Application
