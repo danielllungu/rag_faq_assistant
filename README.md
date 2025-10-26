@@ -60,7 +60,7 @@ docker run --rm --name faq-app -p 8000:8000 --env-file ./.env -e DB_HOST=host.do
 
 API available at: `http://localhost:8000`
 
-### 3. Set Up Frontend
+### 3. Set Up Frontend (two options, see full documentation [frontend/README.md](frontend/README.md))
 ```bash
 cd ../frontend
 ```
